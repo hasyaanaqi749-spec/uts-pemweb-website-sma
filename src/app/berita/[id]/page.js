@@ -1,15 +1,34 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { daftarBerita } from '@/data/beritaData';
+import { daftarBerita } from '../../../data/berita';
+
+// Wajib untuk build Vercel agar halaman [id] bisa di-render
+export function generateStaticParams() {
+  return daftarBerita.map((item) => ({
+    id: String(item.id),
+  }));
+}
 
 export default async function DetailBeritaPage({ params }) {
-  const { id } = await params;
+  // Ambil parameter id dari dynamic route secara aman untuk Vercel
+  const resolvedParams = await Promise.resolve(params);
+  const id = resolvedParams?.id;
+
+  // Cari berita yang cocok berdasarkan id
   const berita = daftarBerita.find((item) => String(item.id) === String(id));
 
+  // Jika id tidak ditemukan di data berita
   if (!berita) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold mb-4">Berita Tidak Ditemukan</h1>
-        <Link href="/berita" className="px-4 py-2 bg-cyan-700 text-white rounded-lg text-sm">
+      <div className="py-20 text-center max-w-lg mx-auto px-4 space-y-4">
+        <h2 className="text-2xl font-bold text-slate-900">Berita Tidak Ditemukan</h2>
+        <p className="text-slate-600 text-sm">
+          Maaf, artikel yang Anda cari tidak tersedia atau telah dipindahkan.
+        </p>
+        <Link
+          href="/berita"
+          className="inline-block bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold text-sm hover:bg-blue-800"
+        >
           &larr; Kembali ke Daftar Berita
         </Link>
       </div>
@@ -17,36 +36,59 @@ export default async function DetailBeritaPage({ params }) {
   }
 
   return (
-    <article className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-      <div className="flex items-center gap-3 mb-3">
-        <span className="px-3 py-1 bg-cyan-100 text-cyan-800 text-xs font-semibold rounded-full">
-          {berita.kategori}
-        </span>
-        <span className="text-sm text-slate-500">{berita.tanggal}</span>
+    <div className="py-12 px-4 max-w-4xl mx-auto space-y-8">
+      {/* Breadcrumb navigasi */}
+      <nav className="text-xs text-slate-500 flex items-center gap-2">
+        <Link href="/" className="hover:text-blue-700">Home</Link>
+        <span>/</span>
+        <Link href="/berita" className="hover:text-blue-700">Berita</Link>
+        <span>/</span>
+        <span className="text-slate-800 font-medium truncate max-w-xs">{berita.judul}</span>
+      </nav>
+
+      {/* Header Berita */}
+      <header className="space-y-3">
+        <div className="flex items-center gap-3">
+          <span className="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">
+            {berita.kategori}
+          </span>
+          <span className="text-xs text-slate-500">
+            📅 {berita.tanggal}
+          </span>
+        </div>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+          {berita.judul}
+        </h1>
+        <p className="text-xs text-slate-500">
+          Ditulis oleh: <span className="font-semibold text-slate-700">{berita.penulis}</span>
+        </p>
+      </header>
+
+      {/* Gambar Utama Berita */}
+      <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-slate-100 max-h-[480px]">
+        <img
+          src={berita.gambar}
+          alt={berita.judul}
+          className="w-full h-full object-cover"
+        />
       </div>
 
-      <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight mb-6">
-        {berita.judul}
-      </h1>
-
-      <div className="rounded-2xl overflow-hidden mb-8 border border-slate-200">
-        <img src={berita.gambar} alt={berita.judul} className="w-full h-auto max-h-[460px] object-cover" />
-      </div>
-
-      <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-4 mb-10">
-        {berita.isiLengkap.map((p, idx) => (
-          <p key={idx}>{p}</p>
+      {/* Paragraf Isi Berita Lengkap */}
+      <article className="prose max-w-none text-slate-700 leading-relaxed space-y-4 text-base">
+        {berita.konten.map((paragraf, index) => (
+          <p key={index}>{paragraf}</p>
         ))}
-      </div>
+      </article>
 
-      <div className="pt-6 border-t border-slate-200">
+      {/* Tombol Wajib Sesuai Rubrik UTS: [Kembali ke Berita] menggunakan next/link */}
+      <div className="pt-8 border-t border-slate-200">
         <Link
           href="/berita"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-medium rounded-lg text-sm transition"
+          className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm px-5 py-2.5 rounded-lg border border-slate-300 transition"
         >
-          &larr; Kembali ke Berita
+          &larr; [Kembali ke Berita]
         </Link>
       </div>
-    </article>
+    </div>
   );
 }

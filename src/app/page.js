@@ -1,69 +1,113 @@
-import Image from "next/image";
+import Link from 'next/link';
+import Hero from '../components/Hero';
+import BeritaCard from '../components/BeritaCard';
+import { daftarBerita } from '@/data/berita';
 
-export default function Home() {
+export default function HomePage() {
+  // Ambil minimal 3 berita terbaru untuk beranda sesuai petunjuk tugas
+  const beritaTerbaru = daftarBerita.slice(0, 3);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div>
+      {/* 1. Hero / Banner Sekolah */}
+      <Hero />
+
+      {/* 2. Slogan & Highlight Keunggulan */}
+      <section className="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white py-10 px-4 shadow-inner">
+        <div className="max-w-6xl mx-auto text-center space-y-3">
+          <span className="text-xs font-bold uppercase tracking-widest bg-yellow-500 text-blue-950 px-3 py-1 rounded-full">
+            Motto Pendidikan SMANDAM
+          </span>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-yellow-300">
+            "Cerdas, Berkarakter, Berakhlak Mulia, dan Berprestasi"
+          </h2>
+          <p className="text-blue-100 max-w-2xl mx-auto text-sm md:text-base">
+            Membentuk generasi pembelajar sepanjang hayat yang unggul dalam ilmu pengetahuan dan berakar kuat pada nilai-nilai Pancasila.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* 3. Sambutan Singkat Kepala Sekolah & Tentang Sekolah */}
+      <section className="max-w-6xl mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+          {/* Foto Kepala Sekolah */}
+          <div className="md:col-span-5 text-center">
+            <div className="relative inline-block">
+              <div className="w-56 h-72 md:w-64 md:h-80 mx-auto rounded-2xl overflow-hidden shadow-2xl border-4 border-yellow-400 bg-slate-200">
+                <img
+                  src="/images/Pak-Prayit-3x4-1.jpg"
+                  alt="Kepala Sekolah SMA Negeri 2 Mranggen"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="mt-4 bg-white p-3 rounded-xl shadow-md border border-slate-200">
+                <h4 className="font-bold text-slate-900 text-base">Prayitno, S.Pd, M.Pd.</h4>
+                <p className="text-xs text-blue-800 font-semibold">Kepala SMA Negeri 2 Mranggen</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Sambutan & Tentang Singkat */}
+          <div className="md:col-span-7 space-y-5">
+            <div className="inline-block bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-md">
+              Sambutan Kepala Sekolah
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-white-900 leading-tight">
+              Selamat Datang di Portal Resmi SMA Negeri 2 Mranggen
+            </h3>
+            <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+              Puji syukur kehadirat Allah SWT, berkat karunia-Nya website SMA Negeri 2 Mranggen hadir sebagai jendela informasi dan transparansi akademik. Kami berkomitmen mewujudkan iklim belajar yang inovatif, ramah anak, dan mendorong setiap siswa meraih potensi tertingginya.
+            </p>
+            <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+              Berdiri sejak tahun 1992 di Kabupaten Demak, SMANDAM telah terakreditasi "A" dan terus bertransformasi mencetak lulusan berprestasi di tingkat perguruan tinggi negeri maupun dunia profesional.
+            </p>
+            <div className="pt-2 flex flex-wrap gap-4">
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow transition"
+              >
+                Baca Profil Lengkap &rarr;
+              </Link>
+              <Link
+                href="/berita"
+                className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm px-5 py-2.5 rounded-lg border border-slate-300 transition"
+              >
+                Kabar Sekolah
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* 4. Berita Terbaru (Minimal 3 Berita di Home sesuai Rubrik UTS) */}
+      <section className="bg-slate-100 py-16 px-4">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Update Terkini</span>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                Berita Terbaru SMANDAM
+              </h3>
+              <p className="text-slate-600 text-sm mt-1">
+                Informasi penting seputar kegiatan, akademik, dan prestasi siswa
+              </p>
+            </div>
+            <Link
+              href="/berita"
+              className="inline-flex items-center text-sm font-bold text-blue-700 hover:text-blue-900 hover:underline"
+            >
+              Lihat Semua Berita &rarr;
+            </Link>
+          </div>
+
+          {/* Grid 3 Berita Menggunakan Reusable Component BeritaCard */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {beritaTerbaru.map((item) => (
+              <BeritaCard key={item.id} item={item} />
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
