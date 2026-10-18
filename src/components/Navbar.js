@@ -28,12 +28,21 @@ export default function Navbar() {
         </Link>
 
         {/* Menu Navigasi Desktop */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-700">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-6 text-xs lg:text-sm font-semibold text-slate-700">
           <Link href="/" className="hover:text-blue-700 transition">
             Home
           </Link>
           <Link href="/about" className="hover:text-blue-700 transition">
             About
+          </Link>
+          <Link href="/guru" className="hover:text-blue-700 transition">
+            Guru
+          </Link>
+          <Link href="/ekstrakurikuler" className="hover:text-blue-700 transition">
+            Ekstrakurikuler
+          </Link>
+          <Link href="/prestasi" className="hover:text-blue-700 transition">
+            Prestasi
           </Link>
           <Link href="/berita" className="hover:text-blue-700 transition">
             Berita
@@ -80,11 +89,39 @@ export default function Navbar() {
             About
           </Link>
           <Link
+            href="/guru"
+            onClick={() => setIsOpen(false)}
+            className="block py-2 px-3 rounded hover:bg-slate-100"
+          >
+            Guru
+          </Link>
+          <Link
+            href="/ekstrakurikuler"
+            onClick={() => setIsOpen(false)}
+            className="block py-2 px-3 rounded hover:bg-slate-100"
+          >
+            Ekstrakurikuler
+          </Link>
+          <Link
+            href="/prestasi"
+            onClick={() => setIsOpen(false)}
+            className="block py-2 px-3 rounded hover:bg-slate-100"
+          >
+            Prestasi
+          </Link>
+          <Link
             href="/berita"
             onClick={() => setIsOpen(false)}
             className="block py-2 px-3 rounded hover:bg-slate-100"
           >
             Berita
+          </Link>
+          <Link
+            href="/berita/1"
+            onClick={() => setIsOpen(false)}
+            className="block py-2 px-3 rounded bg-yellow-400 text-blue-950 font-bold text-center mt-2 shadow-sm"
+          >
+            Info SPMB
           </Link>
         </nav>
       )}
